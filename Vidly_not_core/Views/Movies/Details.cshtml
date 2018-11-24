@@ -1,0 +1,28 @@
+﻿@model Vidly_not_core.Models.Movie
+
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Movie</h2>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Genre</th>
+            <th>Release date</th>
+            <th>Date of added</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Name</td>
+            <td>@Model.MovieGenre.MovieGenreName</td>
+            <td>@Model.ReleaseDate</td>
+            <td>@Model.DateAdded</td>
+            <td>@Model.Stock</td>
+        </tr>
+    </tbody>
+</table>

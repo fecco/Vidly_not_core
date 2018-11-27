@@ -60,7 +60,7 @@ intellisense.annotate(jQuery, {
     /// </signature>
   },
   'cssHooks': function() {
-    /// <summary>Hook directly into jQuery to override how particular CSS properties are retrieved or set, normalize CSS property naming, or create custom properties.</summary>
+    /// <summary>Hook directly into jQuery to override how particular CSS properties are retrieved or set, normalize CSS property naming, or Create custom properties.</summary>
     /// <returns type="Object" />
   },
   'data': function() {
@@ -222,7 +222,7 @@ intellisense.annotate(jQuery, {
   },
   'isPlainObject': function() {
     /// <signature>
-    ///   <summary>Check to see if an object is a plain object (created using "{}" or "new Object").</summary>
+    ///   <summary>Check to see if an object is a plain object (Created using "{}" or "new Object").</summary>
     ///   <param name="object" type="PlainObject">The object that will be checked to see if it's a plain object.</param>
     ///   <returns type="Boolean" />
     /// </signature>
@@ -301,7 +301,7 @@ intellisense.annotate(jQuery, {
     /// <signature>
     ///   <summary>Parses a string into an array of DOM nodes.</summary>
     ///   <param name="data" type="String">HTML string to be parsed</param>
-    ///   <param name="context" type="Element">Document element to serve as the context in which the HTML fragment will be created</param>
+    ///   <param name="context" type="Element">Document element to serve as the context in which the HTML fragment will be Created</param>
     ///   <param name="keepScripts" type="Boolean">A Boolean indicating whether to include scripts passed in the HTML string</param>
     ///   <returns type="Array" />
     /// </signature>
@@ -695,7 +695,7 @@ intellisense.annotate(jQuery.Event.prototype, {
     /// <returns type="Element" />
   },
   'timeStamp': function() {
-    /// <summary>The difference in milliseconds between the time the browser created the event and January 1, 1970.</summary>
+    /// <summary>The difference in milliseconds between the time the browser Created the event and January 1, 1970.</summary>
     /// <returns type="Number" />
   },
   'type': function() {

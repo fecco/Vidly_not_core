@@ -777,13 +777,13 @@ th {
 .glyphicon-record:before {
   content: "\e165";
 }
-.glyphicon-save:before {
+.glyphicon-Create:before {
   content: "\e166";
 }
 .glyphicon-open:before {
   content: "\e167";
 }
-.glyphicon-saved:before {
+.glyphicon-Created:before {
   content: "\e168";
 }
 .glyphicon-import:before {
@@ -798,13 +798,13 @@ th {
 .glyphicon-floppy-disk:before {
   content: "\e172";
 }
-.glyphicon-floppy-saved:before {
+.glyphicon-floppy-Created:before {
   content: "\e173";
 }
 .glyphicon-floppy-remove:before {
   content: "\e174";
 }
-.glyphicon-floppy-save:before {
+.glyphicon-floppy-Create:before {
   content: "\e175";
 }
 .glyphicon-floppy-open:before {
@@ -882,7 +882,7 @@ th {
 .glyphicon-cd:before {
   content: "\e201";
 }
-.glyphicon-save-file:before {
+.glyphicon-Create-file:before {
   content: "\e202";
 }
 .glyphicon-open-file:before {

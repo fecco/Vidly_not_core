@@ -1,0 +1,40 @@
+﻿@*Az alábbi részt lecseréljük miután létrehoztuk a viewmodelt*@
+@*@model Vidly_not_core.Models.Customer*@
+@model Vidly_not_core.ViewModels.CustomerFomrViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Customer</h2>
+@*A Html.BeginForm csak a <form> tag-et generálja, záró tag nélkül ez a method egy disposable objektummal tér vissza
+    ha a using-al együtt használjuk, akkor a dispose végén rendereli a záró tag-et is!  *@
+
+@using (Html.BeginForm("Save", "Customers"))
+{
+    <div class="form-group">
+        @*Mivel a Customer-t hozzáadtuk property-ként a viewmodelhez, így itt már el tudjuk érni csak prefixként be kell írni*@
+        @Html.LabelFor(c => c.Customer.Name)
+        @*Azért kell az @ a class elé, mert a class egy kulcsszó*@
+        @Html.TextBoxFor(c => c.Customer.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Customer.CustomersBirthDate)
+        @*Azért kell az @ a class elé, mert a class egy kulcsszó*@
+        @*A születésnaphoz standard format stringet használunk, hogy az időpontot ne írja ki*@
+        @Html.TextBoxFor(c => c.Customer.CustomersBirthDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Customer.MembershipTypeId)
+        @Html.DropDownListFor(c => c.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "MembershipTypeId", "MembershipTypeName"), "Select membership type!", new { @class = "form-control" })
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(c => c.Customer.IsSubscribedtoNewsLetter) Subscibed to Newsletter?
+        </label>
+    </div>
+
+    @*Az Id, ami alapján a változtatásokat tesszük nem volt a form-on, így hozzá kell adni*@
+    @Html.HiddenFor(c => c.Customer.Id);
+    <button type="submit" class="btn btn-primary">Create</button>
+}

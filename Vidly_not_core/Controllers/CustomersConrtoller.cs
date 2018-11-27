@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Vidly_not_core.Models;
+using Vidly_not_core.ViewModels;
 
 namespace Vidly_not_core.Controllers
 {
@@ -24,6 +25,67 @@ namespace Vidly_not_core.Controllers
             //base.Dispose(disposing);
             _context.Dispose();
         }
+
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new CustomerFomrViewModel
+            {
+                MembershipTypes = membershipTypes
+            };
+            return View("CustomerForm", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Customer customer)
+        {
+            //a korábban create action-t save-re cseréltük, hogy ne kelljen külön implementálni egy update-et, hanem ezt
+            //használhassuk a létrehozásra és a módosításra egyaránt.
+            if (customer.Id == 0)
+                _context.Customers.Add(customer);
+            else
+            {
+                //először a DB-ből lekérjük az Id alapján a már meglévő customert.
+                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
+
+                //ez a proper way ahogyan updatelni illik egy adatbázis onjektumot a Microsoft szerint:
+
+                //TryUpdateModel(customerInDb);
+
+                //Mosh szerint ugyanakkor security issuet is jelent ez az approach mivel ilyenkor a teljes tartalmat updateli 
+                //nem csak azokat a mezőket, amikben valóban változás van.
+
+                //ehelyett azonban mindig jobb, ha megadjuk a pontos listát, hogy mit szeretnénk update-elni a DB-ben:
+                customerInDb.Name = customer.Name;
+                customerInDb.CustomersBirthDate = customer.CustomersBirthDate;
+                customerInDb.MembershipTypeId = customer.MembershipTypeId;
+                customerInDb.IsSubscribedtoNewsLetter = customer.IsSubscribedtoNewsLetter;
+
+
+            }
+            //azzal, hogy a _contexthez adtuk a customert, az még nem kerülk a DB-be, csak a memóriába
+            //a _context folyamatosan trackeli a változásokat amiken átessett, de csak akkor véglegesíti, ha mentjük azokat
+            
+            //miután áttértünk a save action-re már nem kell az Add!
+            //_context.Customers.Add(customer);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Customers");
+        }
+
+        public ActionResult Edit(int Id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == Id);
+
+            if (customer == null)
+                return HttpNotFound();
+            var viewModel = new CustomerFomrViewModel
+            {
+                Customer = customer,
+                MembershipTypes = _context.MembershipTypes.ToList()
+            };
+            return View("CustomerForm", viewModel);
+        }
+
         public ViewResult Index()
         {
             //az eredeti függvényhívás helyett áttérünk az adatbázisos verzióra:

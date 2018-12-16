@@ -27,6 +27,41 @@ namespace Vidly_not_core.Controllers
             _context.Dispose();
         }
 
+        public ActionResult New()
+        {
+            var movieGenres = _context.MovieGenres.ToList();
+            var viewModel = new MovieFormViewModel
+            {
+                MovieGenres = movieGenres
+            };
+            return View("MovieForm", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                //először a DB-ből lekérjük az Id alapján a már meglévő moviet.
+                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
+
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.DateAdded = DateTime.Now;
+                movieInDb.Stock = movie.Stock;
+                movieInDb.MovieGenreId = movie.MovieGenreId;
+
+
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Movies");
+        }
+
         // GET: Movies/Random
         public ActionResult Random()
         {
@@ -52,7 +87,17 @@ namespace Vidly_not_core.Controllers
 
         public ActionResult Edit(int id)
         {
-            return Content("id = " + id);
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+
+            if (movie == null)
+                return HttpNotFound();
+            var viewModel = new MovieFormViewModel
+            {
+                Movie = movie,
+                MovieGenres = _context.MovieGenres.ToList()
+            };
+            return View("MovieForm", viewModel);
+            //return Content("id = " + id);
         }
 
         //public ActionResult Index(int? pageIndex, string sortBy)
